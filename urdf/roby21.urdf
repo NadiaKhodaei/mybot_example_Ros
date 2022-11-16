@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="roby">
+ <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.010" rpy="0 0 0"/>
+  </joint>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-4.88882220595066E-07 0.000972626006635058 0.0898436289225021"
+        rpy="0 0 0" />
+      <mass
+        value="3.56240159558867" />
+      <inertia
+        ixx="0.0101924532068992"
+        ixy="-8.5809409162455E-11"
+        ixz="5.65106408058334E-08"
+        iyy="0.027685131424944"
+        iyz="1.81566261390935E-12"
+        izz="0.0352489748144975" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link_front_r">
+    <inertial>
+      <origin
+        xyz="3.87977804050532E-09 0.0194765793507829 3.79615475165629E-09"
+        rpy="0 0 0" />
+      <mass
+        value="1.01652821690229" />
+      <inertia
+        ixx="0.00229820306656242"
+        ixy="-4.46329226866243E-09"
+        ixz="-6.36405945828686E-11"
+        iyy="0.00444557638730156"
+        iyz="4.47213906622822E-09"
+        izz="0.00229820309563042" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_front_r.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_front_r.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_front_r"
+    type="continuous">
+    <origin
+      xyz="0.185 -0.25045 0.048562"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_front_r" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_front_l">
+    <inertial>
+      <origin
+        xyz="4.01979932673768E-09 -0.0194765793507828 3.64755850523757E-09"
+        rpy="0 0 0" />
+      <mass
+        value="1.0165282169023" />
+      <inertia
+        ixx="0.00229820308798467"
+        ixy="-4.19926698075575E-09"
+        ixz="-6.4914671976799E-11"
+        iyy="0.00444557638730155"
+        iyz="4.72092813769568E-09"
+        izz="0.00229820307420817" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_front_l.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_front_l.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_front_l"
+    type="continuous">
+    <origin
+      xyz="0.185 0.2524 0.048562"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_front_l" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_rear_r">
+    <inertial>
+      <origin
+        xyz="-4.0198021578064E-09 0.0194765793508055 3.64759339399612E-09"
+        rpy="0 0 0" />
+      <mass
+        value="1.01652821690229" />
+      <inertia
+        ixx="0.00229820308798466"
+        ixy="-4.19926697916541E-09"
+        ixz="6.49146701994899E-11"
+        iyy="0.00444557638730154"
+        iyz="-4.7209281335483E-09"
+        izz="0.00229820307420816" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_rear_r.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_rear_r.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_rear_r"
+    type="continuous">
+    <origin
+      xyz="-0.185 -0.25045 0.048562"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_rear_r" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_rear_l">
+    <inertial>
+      <origin
+        xyz="-3.87977838745002E-09 -0.0194765793507828 3.79615452961168E-09"
+        rpy="0 0 0" />
+      <mass
+        value="1.01652821690229" />
+      <inertia
+        ixx="0.00229820306656241"
+        ixy="-4.46329226851024E-09"
+        ixz="6.36405941497615E-11"
+        iyy="0.00444557638730156"
+        iyz="-4.47213906623084E-09"
+        izz="0.00229820309563043" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_rear_l.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://turtlebot3_sim/meshes/link_rear_l.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_rear_l"
+    type="continuous">
+    <origin
+      xyz="-0.185 0.2524 0.048562"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_rear_l" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="1"
+      velocity="1" />
+  </joint>
+  <joint name="imu_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="imu_link"/>
+      <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
+    </joint>
+
+    <link name="imu_link"/>
+
+	 <link name="base_scan">
+		  <collision>
+		   <origin xyz="0 0 0" rpy="0 0 0"/>
+		   <geometry>
+		    <box size="0.1 0.1 0.1"/>
+		   </geometry>
+		  </collision>
+		  <visual>
+	      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+	      <geometry>
+		<mesh filename = "package://hurba_navigation/meshes/hokuyo.dae"/>
+	      </geometry>
+		  </visual>
+		  <inertial>
+		    <mass value="1e-5" />
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+		  </inertial>
+	</link>
+
+	<joint name="laser_joint" type="fixed">
+	  <origin xyz="0.0555 0 0.2558" rpy="0 0 3.14"/>
+	  <parent link="base_link"/>
+	  <child link="base_scan"/>
+	</joint>
+
+
+  <link name="zed2_camera_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://turtlebot3_sim/urdf/ZEDM.stl" />
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0 0 0 0.9"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="zed2_camera_joint" type="fixed">
+    <origin xyz="0.031 -0.008163 0.151843" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="zed2_camera_link"/>
+  </joint>
+
+<!--######################################################################-->
+<gazebo>
+  <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <odometryRate>50.0</odometryRate>
+    <robotBaseFrame>base_link</robotBaseFrame>
+  </plugin>
+</gazebo>
+<!-- 
+  <gazebo>
+    <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>50</updateRate>
+      <leftJoint>joint_front_l</leftJoint>
+      <rightJoint>joint_front_r</rightJoint>
+    </plugin>
+  </gazebo> -->
+
+ <!--######################################################################-->
+ <!-- <gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <robotNamespace>/</robotNamespace>
+    <leftFrontJoint>joint_front_l</leftFrontJoint>
+    <rightFrontJoint>joint_front_r</rightFrontJoint>
+    <leftRearJoint>joint_rear_l</leftRearJoint>
+    <rightRearJoint>joint_rear_r</rightRearJoint>
+    <wheelSeparation>0.4</wheelSeparation>
+    <wheelDiameter>0.215</wheelDiameter>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+    <torque>20</torque>
+    <topicName>cmd_vel</topicName>
+     <frameName>map</frameName>
+    <broadcastTF>false</broadcastTF>
+  </plugin>
+</gazebo>  -->
+ <!--######################################################################-->
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="base_scan">
+    <material>Gazebo/FlatBlack</material>
+    <sensor type="ray" name="lds_lfcd_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>0.0</min_angle>
+            <max_angle>6.28319</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120</min>
+          <max>3.5</max>
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>base_scan</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <controlPeriod>0.001</controlPeriod>
+      <legacyModeNS>false</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+<!--######################################################################-->
+ <!-- <gazebo>
+	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+	  <alwaysOn>true</alwaysOn>
+	  <updateRate>50.0</updateRate>
+	  <bodyName>base_footprint</bodyName>
+	  <topicName>odom</topicName>
+	  <gaussianNoise>0.01</gaussianNoise>
+	  <frameName>map</frameName>
+	  <xyzOffsets>0 0 0</xyzOffsets>
+	  <rpyOffsets>0 0 0</rpyOffsets>
+	</plugin>
+	</gazebo>  -->
+
+ <!--  <gazebo reference="navsat_link">
+    <material>Gazebo/DarkGrey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo> -->
+
+<!--######################################################################-->
+ <!--  <gazebo>
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <updateRate>40</updateRate>
+      <robotNamespace>/</robotNamespace>
+      <bodyName>navsat_link</bodyName>
+      <frameId>base_link</frameId>
+      <topicName>/gps/fix</topicName>
+      <velocityTopicName>/gps/vel</velocityTopicName>
+      <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.0001 0.0001 0.0001</drift>
+    </plugin>
+  </gazebo> -->
+
+<!--######################################################################-->
+
+<!--######################################################################-->
+
+<gazebo reference="link_front_l">
+ <mu1 value="0.0"/>
+ <mu2 value="0.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+ <slip1>1.0</slip1>
+ <slip2>1.0</slip2>
+</gazebo>
+
+<gazebo reference="link_front_r">
+ <mu1 value="0.0"/>
+ <mu2 value="0.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="link_rear_l">
+ <mu1 value="0.0"/>
+ <mu2 value="0.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="link_rear_r">
+ <mu1 value="0.0"/>
+ <mu2 value="0.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<!--   <gazebo reference="zed2_camera_link">
+    <sensor type="camera" name="zed2_camera_left_sensor">
+      <update_rate>30.0</update_rate>
+      <camera name="zed2_camera_left_camera">
+        <horizontal_fov>0.8709216071359963</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>B8G8R8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <cameraName>/stereo_camera/zed2</cameraName>
+        <imageTopicName>/zed_node/rgb/image_rect_color</imageTopicName>
+        <cameraInfoTopicName>/zed_node/rgb/camera_info</cameraInfoTopicName>
+        <frameName>zed2_camera_link</frameName>
+        <hackBaseline>0</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo> -->
+
+<transmission name="front_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="joint_front_l">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="front_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="joint_front_r">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="joint_rear_l">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="joint_rear_r">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+
+</robot>

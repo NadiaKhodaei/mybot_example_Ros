@@ -1,0 +1,207 @@
+
+<launch>
+<!--<node pkg="tf" type="static_transform_publisher" name="stereo_camera_base_link" args="$(arg optical_rotate) stereo_camera_base stereo_camera 100" />-->
+<!--<node pkg="tf" type="static_transform_publisher" name="camera_base_link" args="0 0 1 0 0.3 0 base_link zed2_camera_center 100" /> -->
+<!--<node pkg="tf" type="static_transform_publisher" name="base_to_stereo_camera_base_link" args="0.01 0.06 0.90 0 0.37 0 base_link zed2_camera_center 100" /> -->
+<!--<node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.09 0 0 0 base_footprint base_link 100" />-->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100" /> -->
+  <!-- Subscribe: /initialpose, /move_base_simple/goal -->
+  <!-- Publish: /initial_2d, /goal_2d --> 
+  <!--<node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
+  </node>-->
+ <!--    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+ -->
+
+   <node pkg="rover_drive" name="driver" type="drive.py" output="screen" />
+    <node pkg="rover_drive" name="cmd_vel_muxer" type="cmd_vel_muxer.py" output="screen"> </node>
+
+
+    <arg name="dev" default="/dev/input/js0"/>
+    <node pkg="rover_teleoperation" type="drive_teleoperation.py" name="drive_teleoperation_joy" output="screen" respawn="true" />
+    <node pkg="rover_teleoperation" type="joy_teleoperation_node.py" name="teleoperation_ros"> </node>
+    <node pkg="joy" type="joy_node" name="joy_node" clear_params="true" >
+    <param name="dev" value="$(arg dev)" />
+     <param name="deadzone" value="0.12" />
+    </node>
+
+  <arg name="gui" default="true" />
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find turtlebot3_sim)/config/newazi.rviz" />
+  <param name="robot_description" textfile="$(find turtlebot3_sim)/urdf/roby21.urdf" />
+
+
+ <!-- Wheel Odometry Publisher -->
+  <!-- Subscribe: /right_ticks, /left_ticks, /initial_2d -->
+  <!-- Publish: /odom_data_euler, /odom_data_quat -->
+  <!--<node pkg="localization_data_pub" type="ekf_odom_pub" name="ekf_odom_pub">
+  </node> -->
+    <!--<node pkg="localization_data_pub" type="odom_pub" name="odom_pub">
+  </node>-->
+ 
+
+  <arg name="rviz"            default="true"/>
+  <arg name="rate"            default="1.0"/>
+
+  <!-- <arg  if="$(arg localization)" name="rtabmap_args"  default="true"/> -->
+  <arg name="localization"    default="true" doc="Localization mode for navigation"/>
+  <arg name="database_path" default="~/.ros/rtabmap.db"/>
+  <arg name="imu_topic"               default="/stereo_camera/zed2/zed_node/imu/data" />
+
+   <!-- icp  -->
+  <arg name="p2n" default="true" />
+  <arg name="pm" default="true" />
+  <arg name="IS_TWISTSTAMPED" default="true" />
+  <arg name="publish_covariance" default="false"/>
+   
+   
+    <!-- Map File -->
+  <arg name="map_file" default="$(find turtlebot3_sim)/maps/mapwithnav.yaml"/> 
+
+  <!-- Map Server -->
+ <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+  
+
+<!-- ROS navigation stack move_base -->
+    <group ns="planner">
+        <remap from="openni_points" to="/stereo_camera/obstacles"/>
+        <!-- <remap from="map" to="/rtabmap/proj_map"/> -->
+        <remap from="move_base_simple/goal" to="/planner_goal"/>
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" >
+        <rosparam file="$(find turtlebot3_sim)/config2/costmap_common_params.yaml" command="load" ns="global_costmap" />
+         <rosparam file="$(find turtlebot3_sim)/config2/costmap_common_params.yaml" command="load" ns="local_costmap" />
+         <rosparam file="$(find turtlebot3_sim)/config2/local_costmap_params.yaml" command="load"  ns="local_costmap" />
+         <rosparam file="$(find turtlebot3_sim)/config2/global_costmap_params.yaml" command="load" ns="global_costmap" />
+         <!-- <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params_waffle.yaml" command="load"  ns="DWAPlannerROS" />
+         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/> -->
+                 <rosparam file="$(find peykbot)/config2/teb_local_planner_params.yaml" command="load" />
+       <!--   <rosparam file="$(find peykbot)/config2/base_local_planner_params.yaml" command="load"  ns="NavfnROS" /> -->
+         <!-- <param  name="base_global_planner" value="navfn/NavfnROS" /> -->
+         <!-- <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/> -->
+         <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>  -->
+
+          <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+          <param name="planner_frequency" value="3.0" />
+          <param name="planner_patience" value="5.0" />
+
+          <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+          <param name="controller_frequency" value="5.0" />
+          <param name="controller_patience" value="15.0" />
+          <param name="recovery_behaviour_enabled" value="true" />
+         <param name="transform_tolerance" value="0.1"/>
+         <remap from="scan" to="/scan"/>
+          <remap from="/planner/cmd_vel" to="/cmd_vel"/>
+         <remap from="odom" to="/odom"/>
+      </node>
+    </group>    
+
+
+
+<remap from="/robot_base_velocity_controller/cmd_vel" to="/cmd_vel"/>
+<remap from="/robot_base_velocity_controller/odom" to="/odom"/>
+<!-- 
+<group ns="rtabmap"> -->
+ <!--  <node  pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry">
+     <remap from="scan"      to="/scan"/>
+     <remap from="scan_cloud"             to="cloudXYZ"/>
+     <remap from="odom"      to="/scanmatch_odom"/>
+     <param name="publish_tf" value="false" />
+     <param name="frame_id"        type="string" value="base_link"/>
+     <remap from="imu"                    to="$(arg imu_topic)"/>
+     <param name="wait_for_transform_duration" type="double" value="0.2"/>
+     <param name="Icp/VoxelSize"     type="string" value="0"/>
+     <param name="Icp/Epsilon"       type="string" value="0.001"/>
+     <param name="wait_imu_to_init"            type="bool"   value="false"/>
+     <param if="$(arg p2n)" name="Icp/PointToPlane"  type="string" value="true"/>
+     <param unless="$(arg p2n)" name="Icp/PointToPlane"  type="string" value="false"/>
+     <param unless="$(arg p2n)" name="Icp/PointToPlaneK"  type="string" value="0"/>
+     <param unless="$(arg p2n)" name="Icp/PointToPlaneRadius"  type="string" value="0"/>
+     <param name="Icp/MaxCorrespondenceDistance" type="string" value="0.1"/> -->
+     <!-- <param name="Icp/Strategy"             type="string" value="$(arg pm)"/>  --><!-- use libpointmatcher to handle PointToPlane with 2d scans-->
+    <!--  <param name="Icp/OutlierRatio" type="string" value="0.85"/>
+     <param name="Odom/Strategy"        type="string" value="0"/>
+     <param name="Odom/GuessMotion"     type="string" value="true"/>
+     <param name="Odom/ResetCountdown"  type="string" value="1"/>
+     <param name="Odom/ScanKeyFrameThr"  type="string" value="0.9"/>   
+     <param name="OdomF2M/ScanSubtractRadius"  type="string" value="0.2"/>
+     <param name="OdomF2M/ScanMaxSize"  type="string" value="10000"/> 
+  </node> -->
+
+
+    <!-- Visual Odometry -->
+<!--      <node pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry"  output="screen">
+       <remap from="left/image_rect"       to="/stereo_camera/zed2/zed_node/left/image_rect_color"/>
+       <remap from="right/image_rect"      to="/stereo_camera/zed2/zed_node/right/image_rect_color"/>
+       <remap from="left/camera_info"      to="/stereo_camera/zed2/zed_node/left/camera_info"/>
+       <remap from="right/camera_info"     to="/stereo_camera/zed2/zed_node/right/camera_info"/>
+       <remap from="imu"                    to="$(arg imu_topic)"/>
+       <remap from="odom"                  to="/stereo_odometry"/> 
+       <param name="frame_id" type="string" value="base_link"/>
+       <param name="Vis/MaxFeatures" type="string" value="400"/> 
+       <param name="Odom/Strategy"      type="string" value="1"/>
+       <param name="Vis/CorType" value="1"/>
+       <param name="odom_frame_id" type="string" value="odom"/>
+       <param name="approx_sync"   type="bool" value="false"/>
+       <param name="publish_tf" value="false" />
+       <param name="queue_size"    type="int" value="10"/>
+       <param name="subscribe_rgb"     type="bool"   value="false"/>
+       <param name="OdomF2M/MaxSize"    type="string" value="1000"/> 
+       <param name="Vis/InlierDistance" type="string" value="0.1"/>
+       <param name="OdomFovis/StereoMaxDisparity"      value="200"/>
+       <param name="Stereo/MaxDisparity"      value="200"/>
+       <param name="Stereo/OpticalFlow"   type="bool"    value="false"/>
+       <param name="Vis/EstimationType" type="string" value="1"/>
+       <param name="Odom/GuessMotion" type="string" value="true"/>
+       <param name="Vis/MinInliers" type="string" value="12"/>
+       <param name="Vis/RoiRatios" type="string" value="0.03 0.03 0.04 0.04"/>
+       <param name="Vis/MaxDepth" type="string" value="10"/>
+       <param name="Odom/ResetCountdown"  type="string" value="1"/>
+       <param name="GFTT/QualityLevel"  type="string" value="0.00001"/> 
+       <param name="GFTT/MinDistance" type="string" value="10"/>
+     </node> -->
+
+<!-- </group> -->
+
+
+  <!-- localization (EKF), refer to demo launch file in robot_localization for more info -->
+
+<!-- <group ns="/outdoor_waypoint_nav"> 
+<rosparam command="load" file="$(find turtlebot3_slam_3d)/config/ekf_params.yaml" />
+<rosparam command="load" file="$(find turtlebot3_slam_3d)/config/navsat_params.yaml" />
+
+ 
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true" output="screen"/>
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+    <remap from="odometry/filtered" to="/outdoor_waypoint_nav/odometry/filtered_map"/>
+  </node>
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen">
+      <remap from="odometry/filtered" to="/outdoor_waypoint_nav/odometry/filtered_map"/>
+      <remap from="gps/fix" to="/gps/fix"/>
+      <remap from="imu/data" to="/stereo_camera/zed2/zed_node/imu/data"/>
+  </node>
+
+</group>  -->
+
+
+<!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" clear_params="true" >
+      <rosparam command="load" file="$(find turtlebot3_sim)/config/ekf_params0.yaml" />
+</node>  -->
+  <!-- <remap from="odom" to="/odom" />
+  <remap from="imu_data" to="/imu" />
+   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom"/>
+    <param name="base_footprint_frame" value="base_footprint"/>
+    <param name="freq" value="40.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="publish_tf" value="false"/>
+    <param name="vo_used" value="false"/>
+    <param name="gps_used" value="false"/>
+    <param name="debug" value="false"/>
+    <param name="self_diagnose" value="false"/>
+  </node> -->
+
+ <include file="$(find turtlebot3_navigation)/launch/amcl.launch"/> 
+</launch>

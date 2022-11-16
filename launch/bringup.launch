@@ -1,0 +1,36 @@
+
+  
+<launch>
+
+
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+<!--   <rosparam command="load" file="$(find turtlebot3_slam_3d)/config/joint_state_controller.yaml" />-->
+  <!-- <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>-->
+ <!-- <rosparam command="load" file="$(find turtlebot3_slam_3d)/config/control.yaml" />-->
+  <!-- <node name="base_controller_spawner" pkg="controller_manager" type="spawner" args="robot_base_joint_publisher robot_base_velocity_controller"/>-->
+  <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/> -->
+
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="57600"/>
+  </node> 
+
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+  <param name="serial_port"         type="string" value="/dev/rplidar"/>
+  <param name="serial_baudrate"     type="int"    value="115200"/><!--A1/A2 -->
+  <!--param name="serial_baudrate"     type="int"    value="256000"--><!--A3 -->
+  <param name="frame_id"            type="string" value="laser"/>
+  <param name="inverted"            type="bool"   value="false"/>
+  <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+
+
+  <include file="$(find turtlebot3_slam_3d)/config/gps.launch" />
+  <arg name="visual_odom" default="true" doc="Use ZED visual odometry"/>
+  
+  <include file="$(find zed_wrapper)/launch/zed2.launch" ns="stereo_camera">
+    <arg name="camera_model" value="zed2i"/> <!-- ZEDM -->
+  </include>
+</launch>
+
+

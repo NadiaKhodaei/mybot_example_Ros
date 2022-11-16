@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="gps">
+    <!-- NavSat Serial -->
+	  <node name="nmea_serial_driver_node" pkg="nmea_navsat_driver" type="nmea_serial_driver" >
+	    <param name="port" value="/dev/ttyUSB0"/>
+	    <param name="baud" value="9600" />
+	    <param name="frame_id" value="gps" />
+	    <param name="use_GNSS_time" value="false" />
+	    <param name="time_ref_source" value="gps" />
+	    <param name="useRMC" value="false" />
+	  </node>
+
+
+  </group>
+
+
+</launch>

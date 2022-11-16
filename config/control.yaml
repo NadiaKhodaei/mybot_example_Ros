@@ -1,0 +1,39 @@
+robot_base_joint_publisher:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
+
+robot_base_velocity_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  left_wheel: ['joint_front_l', 'joint_rear_l']
+  right_wheel: ['joint_front_r', 'joint_rear_r']
+  publish_rate: 50
+  pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  cmd_vel_timeout: 0.25
+  wheel_separation : 2.0
+  wheel_radius : 0.5
+  base_frame_id: base_link
+  odom_frame_id: odom
+  enable_odom_tf: false
+  estimate_velocity_from_position: true
+  wheel_separation_multiplier: 0.5 
+  wheel_radius_multiplier    : 1.0 
+  linear:
+    x:
+      has_velocity_limits    : true
+      max_velocity           : 6.0
+      has_acceleration_limits: true
+      max_acceleration       : 10.5   
+  angular:
+    z:
+      has_velocity_limits    : true
+      max_velocity           : 10.0
+      has_acceleration_limits: true
+      max_acceleration       : 10.5   
+
+/gazebo_ros_control:
+    pid_gains:
+      joint_front_l: {p: 20.0, i: 0.01, d: 0.0, i_clamp: 0.0}
+      joint_front_r: {p: 20.0, i: 0.01, d: 0.0, i_clamp: 0.0}
+      joint_rear_l: {p: 20.0, i: 0.01, d: 0.0, i_clamp: 0.0}
+      joint_rear_r: {p: 20.0, i: 0.01, d: 0.0, i_clamp: 0.0}
